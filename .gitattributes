@@ -4,4 +4,5 @@
 # To prevent CRLF breakages on Windows for fragile files, like testdata.
 * -text
 
-**/embedmd/*.md linguist-generated
+**/embedmd/*.md       linguist-generated
+sucatalog/*.sucatalog linguist-language=XML
