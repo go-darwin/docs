@@ -68,3 +68,62 @@ https://support.apple.com/downloads
 
 - https://web.archive.org/web/20180618155327/https://developer.apple.com/jp/documentation/
 - [Instrumentsユーザガイド](https://web.archive.org/web/20170616034453/https://developer.apple.com/jp/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/TheInstrumentsWorkflow.html#//apple_ref/doc/uid/TP40004652-CH5-SW1)
+
+## TCC.db services
+
+[macOS TCC.db Internals by keith | Rainforest Engineering](https://rainforest.engineering/2021-02-09-macos-tcc/)
+
+It is possible to inspect the localizable strings for the tcc framework to determine what (some) of the valid services are.
+Using the command `plutil -p /System/Library/PrivateFrameworks/TCC.framework/Resources/en.lproj/Localizable.strings` gives us the following list of services along with what the user will be prompted with when access is requested.
+
+- kTCCServiceAddressBook - client would like to access your contacts.
+- kTCCServiceAppleEvents - client wants access to control indirect_object. Allowing control will provide access to documents and data in indirect_object, and to perform actions within that app.
+- kTCCServiceBluetoothAlways - client would like to use Bluetooth.
+- kTCCServiceCalendar - client would like to access your calendar.
+- kTCCServiceCamera - client would like to access the camera.
+- kTCCServiceContactsFull - client would like to access all of your contacts information.
+- kTCCServiceContactsLimited - client would like to access your contacts basic information.
+- kTCCServiceFileProviderDomain - client wants to access files managed by indirect_object.
+- kTCCServiceFileProviderPresence - Do you want to allow client to see when you are using files managed by it? It will see which applications are used to access files and whether you are actively using them. It will not see when files that are not managed by it are accessed.
+- kTCCServiceLocation - client would like to use your current location.
+- kTCCServiceMediaLibrary - client would like to access Apple Music, your music and video activity, and your media library.
+- kTCCServiceMicrophone - client would like to access the microphone.
+- kTCCServiceMotion - client Would Like to Access Your Motion & Fitness Activity.
+- kTCCServicePhotos - client Would Like to Access Your Photos
+- kTCCServicePhotosAdd - client Would Like to Add to your Photos
+- kTCCServicePrototype3Rights - client Would Like Authorization to Test Service Proto3Right.
+- kTCCServicePrototype4Rights - client Would Like Authorization to Test Service Proto4Right.
+- kTCCServiceReminders - client would like to access your reminders.
+- kTCCServiceScreenCapture - client would like to capture the contents of the system display.
+- kTCCServiceSiri - Would You Like to Use client with Siri?
+- kTCCServiceSpeechRecognition - client Would Like to Access Speech Recognition.
+- kTCCServiceSystemPolicyDesktopFolder - client would like to access files in your Desktop folder.
+- kTCCServiceSystemPolicyDeveloperFiles - client would like to access a file used in Software Development.
+- kTCCServiceSystemPolicyDocumentsFolder - client would like to access files in your Documents folder.
+- kTCCServiceSystemPolicyDownloadsFolder - client would like to access files in your Downloads folder.
+- kTCCServiceSystemPolicyNetworkVolumes - client would like to access files on a network volume.
+- kTCCServiceSystemPolicyRemovableVolumes - client would like to access files on a removable volume.
+- kTCCServiceSystemPolicySysAdminFiles - client would like to administer your computer. Administration can include modifying passwords, networking, and system settings.
+- kTCCServiceWillow - client would like to access your Home data.
+
+Some other values(from running strings on tccd binary, observation, and other places online):
+
+- kTCCServiceSystemPolicyAllFiles - Full Disk Access
+- kTCCServiceAccessibility - Allows app to control your computer
+- kTCCServicePostEvent - Allows to send keystrokes
+- kTCCServiceListenEvent - Input Monitoring; to monitor input from your keyboard
+- kTCCServiceDeveloperTool - Allows app to run software locally that do not meet the system’s security policy
+
+These seem to be carry-overs from iOS, and may not apply on macOS:
+
+- kTCCServiceLiverpool - Related to location services
+- kTCCServiceUbiquity - Related to iCloud
+- kTCCServiceShareKit - Related to the share feature(presumably from iOS)(ShareKit)
+
+There’s also some for specific social networks; again I suspect this is a carry-over from iOS.
+
+- kTCCServiceLinkedIn - LinkedIn
+- kTCCServiceTwitter - Twitter
+- kTCCServiceFacebook - Facebook
+- kTCCServiceSinaWeibo - Sina Weibo
+- kTCCServiceTencentWeibo - Tencent Weibo
